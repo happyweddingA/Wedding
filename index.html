@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan — Army &amp; Niken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F7FA;
+    --cream-2:#E9EEF4;
+    --forest:#2C5C96;
+    --forest-2:#6FA6D6;
+    --gold:#C9A45E;
+    --gold-light:#EAD9B0;
+    --ink:#1B2430;
+    --ink-soft:#4E5A6B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'EB Garamond', serif;
+    overflow-x:hidden;
+  }
+  .serif{font-family:'Cormorant Garamond', serif;}
+  .script{font-family:'Alex Brush', cursive;}
+
+  /* ---------- Kawung batik pattern (signature motif) ---------- */
+  .kawung-bg{
+    background-image:
+      linear-gradient(155deg, #12233F 0%, #1E4470 22%, #2C5C96 45%, #5686BE 68%, #8FB4DC 88%, #C7DCEF 100%),
+      repeating-linear-gradient(115deg, rgba(201,164,94,.16) 0 2px, transparent 2px 90px),
+      repeating-linear-gradient(35deg, rgba(201,164,94,.10) 0 1px, transparent 1px 70px);
+    background-blend-mode: normal, screen, screen;
+  }
+  .divider-kawung{
+    height:14px;
+    width:100%;
+    background-image: radial-gradient(circle, var(--gold) 2.5px, transparent 3px);
+    background-size: 20px 20px;
+    background-position:center;
+    opacity:0.55;
+  }
+
+  /* ---------- Gate / Cover ---------- */
+  #gate{
+    position:fixed; inset:0; z-index:100;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--forest);
+    transition: transform 1s cubic-bezier(.77,0,.18,1), opacity .8s ease;
+  }
+  #gate::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, transparent 11px, rgba(230,209,150,.5) 12px),
+      radial-gradient(circle at 80% 20%, transparent 11px, rgba(230,209,150,.5) 12px),
+      radial-gradient(circle at 20% 80%, transparent 11px, rgba(230,209,150,.5) 12px),
+      radial-gradient(circle at 80% 80%, transparent 11px, rgba(230,209,150,.5) 12px);
+    background-size:50px 50px;
+    opacity:.10;
+  }
+  #gate.opened{ transform: translateY(-100%); opacity:0; pointer-events:none; }
+  .gate-card{
+    position:relative; z-index:2;
+    max-width:420px; width:88%;
+    text-align:center;
+    padding:48px 28px;
+    border:1px solid rgba(230,209,150,.55);
+    background:rgba(255,255,255,0.02);
+  }
+  .gate-eyebrow{
+    color:var(--gold-light); letter-spacing:.35em; font-size:.7rem;
+    text-transform:uppercase; font-family:'EB Garamond',serif;
+  }
+  .gate-amp{ color:var(--gold); font-size:1.6rem; margin:10px 0; }
+  .gate-names{
+    color:var(--cream); font-size:3.4rem; line-height:1;
+    margin:8px 0 18px;
+  }
+  .gate-to{
+    color:var(--gold-light); font-size:.95rem; margin-bottom:4px; opacity:.85;
+  }
+  .gate-guest{
+    color:var(--cream); font-size:1.25rem; margin-bottom:28px;
+    border-bottom:1px solid rgba(230,209,150,.4); display:inline-block; padding-bottom:4px;
+    min-width:180px;
+  }
+  .btn-open{
+    display:inline-flex; align-items:center; gap:10px;
+    background:transparent; color:var(--gold-light);
+    border:1px solid var(--gold); padding:12px 28px;
+    font-family:'EB Garamond',serif; font-size:1rem; letter-spacing:.08em;
+    cursor:pointer; transition:.3s;
+  }
+  .btn-open:hover{ background:var(--gold); color:var(--forest); }
+
+  /* ---------- Sections ---------- */
+  section{ padding:88px 20px; position:relative; }
+  .container{ max-width:640px; margin:0 auto; }
+  .eyebrow{
+    text-align:center; letter-spacing:.3em; text-transform:uppercase;
+    font-size:.72rem; color:var(--ink-soft); margin-bottom:10px;
+  }
+  .center{ text-align:center; }
+  .quote{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.35rem; line-height:1.8; color:var(--forest);
+    max-width:520px; margin:0 auto;
+  }
+  .quote-ref{ margin-top:14px; font-size:.85rem; letter-spacing:.1em; color:var(--ink-soft); }
+
+  /* Hero */
+  #hero{ background:var(--cream); text-align:center; padding-top:70px; }
+  .hero-names{
+    font-family:'Alex Brush', cursive; color:var(--forest);
+    font-size:4.2rem; line-height:1; margin:18px 0 6px;
+  }
+  .hero-sub{ color:var(--ink-soft); font-size:1rem; letter-spacing:.06em; margin-bottom:34px; }
+
+  /* Couple cards */
+  .couple-wrap{ display:grid; grid-template-columns:1fr; gap:38px; margin-top:36px; }
+  @media(min-width:640px){ .couple-wrap{ grid-template-columns:1fr 1fr; } }
+  .couple-card{ text-align:center; }
+  .photo-frame{
+    width:170px; height:170px; border-radius:50%;
+    margin:0 auto 20px; overflow:hidden;
+    border:3px solid var(--gold);
+    box-shadow:0 0 0 6px var(--cream), 0 8px 24px rgba(31,59,44,.18);
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(145deg, var(--forest-2), var(--forest));
+    position:relative;
+  }
+  .photo-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .photo-placeholder{
+    color:var(--gold-light); font-family:'Cormorant Garamond',serif;
+    font-size:.78rem; text-align:center; padding:12px; opacity:.85; line-height:1.5;
+  }
+  .couple-name{ font-family:'Cormorant Garamond',serif; font-size:1.9rem; color:var(--forest); font-weight:600; }
+  .couple-role{ font-size:.85rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin:4px 0 14px; }
+  .couple-parents{ font-size:1rem; color:var(--ink-soft); line-height:1.7; }
+  .couple-address{ font-size:.9rem; color:var(--ink-soft); margin-top:6px; line-height:1.6; }
+
+  /* Gallery */
+  #gallery{ background:var(--cream-2); }
+  .gallery-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:36px;
+  }
+  .gallery-item{
+    aspect-ratio:3/4; border-radius:4px; overflow:hidden;
+    background:linear-gradient(150deg, var(--forest), var(--forest-2));
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--gold-light);
+  }
+  .gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* Events */
+  #events{ background:var(--forest); color:var(--cream); position:relative; }
+  #events .eyebrow{ color:var(--gold-light); }
+  .event-grid{ display:grid; grid-template-columns:1fr; gap:28px; margin-top:36px; }
+  @media(min-width:640px){ .event-grid{ grid-template-columns:1fr 1fr; } }
+  .event-card{
+    border:1px solid rgba(230,209,150,.35); padding:32px 24px; text-align:center;
+    background:rgba(255,255,255,.02);
+  }
+  .event-title{ font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold-light); margin-bottom:4px; }
+  .event-day{ font-size:1.05rem; color:var(--cream); margin-bottom:2px; }
+  .event-date{ font-size:1.35rem; font-family:'Cormorant Garamond',serif; color:var(--cream); margin-bottom:14px; }
+  .event-time, .event-place{ font-size:.92rem; color:var(--gold-light); line-height:1.7; }
+
+  .countdown{ display:flex; justify-content:center; gap:18px; margin:36px 0 8px; flex-wrap:wrap; }
+  .cd-box{ text-align:center; }
+  .cd-num{ font-family:'Cormorant Garamond',serif; font-size:2.1rem; color:var(--gold); line-height:1; }
+  .cd-label{ font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-light); margin-top:4px; }
+
+  /* Location */
+  #location{ background:var(--cream); }
+  .map-link{
+    display:inline-block; margin-top:16px; padding:11px 26px;
+    border:1px solid var(--forest); color:var(--forest); text-decoration:none;
+    font-size:.9rem; letter-spacing:.06em; transition:.3s;
+  }
+  .map-link:hover{ background:var(--forest); color:var(--cream); }
+  .loc-block{ margin-bottom:40px; text-align:center; }
+  .loc-title{ font-family:'Cormorant Garamond',serif; color:var(--forest); font-size:1.3rem; margin-bottom:6px; }
+  .loc-address{ color:var(--ink-soft); font-size:.95rem; line-height:1.7; max-width:420px; margin:0 auto; }
+
+  /* Closing */
+  #closing{ background:var(--forest); color:var(--cream); text-align:center; }
+  #closing .quote{ color:var(--cream); }
+  .closing-thanks{ font-size:.95rem; color:var(--gold-light); margin-top:26px; letter-spacing:.05em; }
+  .closing-names{ font-family:'Alex Brush', cursive; font-size:2.6rem; color:var(--gold-light); margin-top:10px; }
+  footer{ text-align:center; padding:22px; font-size:.75rem; color:var(--ink-soft); background:var(--cream-2); }
+</style>
+</head>
+<body>
+
+  <!-- ===== GATE ===== -->
+  <div id="gate">
+    <div class="kawung-bg" style="position:absolute; inset:0;"></div>
+    <div class="gate-card">
+      <div class="gate-eyebrow">The Wedding Of</div>
+      <div class="gate-amp">✦</div>
+      <div class="gate-names script">Army &amp; Niken</div>
+      <div class="gate-to">Kepada Yth. Bapak/Ibu/Saudara/i</div>
+      <div class="gate-guest" id="guestName">Tamu Undangan</div>
+      <br>
+      <button class="btn-open" onclick="openGate()">✉ &nbsp;Buka Undangan</button>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="container">
+      <div class="eyebrow">Undangan Pernikahan</div>
+      <div class="hero-names">Army &amp; Niken</div>
+      <div class="hero-sub">Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i<br>untuk berkenan hadir di acara pernikahan kami</div>
+      <p class="quote">
+        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
+      </p>
+      <div class="quote-ref">— QS. Ar-Rum: 21</div>
+    </div>
+  </section>
+
+  <div class="divider-kawung"></div>
+
+  <!-- ===== COUPLE ===== -->
+  <section id="couple">
+    <div class="container">
+      <div class="eyebrow">Mempelai</div>
+      <div class="couple-wrap">
+
+        <div class="couple-card">
+          <div class="photo-frame">
+            <!-- Ganti src di bawah dengan foto asli mempelai wanita (Foto 1) -->
+            <img src="" alt="Foto Niken" onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex'">
+            <div class="photo-placeholder" style="display:flex; flex-direction:column; align-items:center;">
+              🌸<br>Foto 1<br>Mempelai Wanita
+            </div>
+          </div>
+          <div class="couple-name">Niken Nur Annisa</div>
+          <div class="couple-role">Mempelai Wanita</div>
+          <div class="couple-parents">Putri dari<br>Bpk. Joko Saroyo &amp; Ibu Tri Muryanti</div>
+          <div class="couple-address">Dk. Sabrangan Rt 07/03 Salakan,<br>Teras, Boyolali</div>
+        </div>
+
+        <div class="couple-card">
+          <div class="photo-frame">
+            <!-- Ganti src di bawah dengan foto asli mempelai pria (Foto 2) -->
+            <img src="" alt="Foto Army" onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex'">
+            <div class="photo-placeholder" style="display:flex; flex-direction:column; align-items:center;">
+              🌿<br>Foto 2<br>Mempelai Pria
+            </div>
+          </div>
+          <div class="couple-name">Army Dwi Apriyanto</div>
+          <div class="couple-role">Mempelai Pria</div>
+          <div class="couple-parents">Putra dari<br>Bpk. Peltu (Purn) Darmantono &amp; Ibu Sunarti</div>
+          <div class="couple-address">Perumahan Ngaru-aru Indah Blok N No. 08 Rt 04/03,<br>Ngaru-aru, Banyudono, Boyolali</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="gallery">
+    <div class="container">
+      <div class="eyebrow">Galeri</div>
+      <div class="center serif" style="font-size:1.5rem; color:var(--forest); margin-bottom:6px;">Sekilas Kisah Kami</div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <!-- Ganti src dengan foto pre-wedding (Foto 3) -->
+          <img src="" alt="Galeri 1" style="display:none">
+          <div class="photo-placeholder">📷<br>Foto 3</div>
+        </div>
+        <div class="gallery-item">
+          <!-- Ganti src dengan foto pre-wedding (Foto 4) -->
+          <img src="" alt="Galeri 2" style="display:none">
+          <div class="photo-placeholder">📷<br>Foto 4</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EVENTS ===== -->
+  <section id="events">
+    <div class="kawung-bg" style="position:absolute; inset:0;"></div>
+    <div class="container" style="position:relative;">
+      <div class="eyebrow">Rangkaian Acara</div>
+      <div class="center serif" style="font-size:1.6rem; color:var(--cream); margin-bottom:6px;">Insyaallah akan dilaksanakan pada</div>
+
+      <div class="countdown" id="countdown">
+        <div class="cd-box"><div class="cd-num" id="cd-d">00</div><div class="cd-label">Hari</div></div>
+        <div class="cd-box"><div class="cd-num" id="cd-h">00</div><div class="cd-label">Jam</div></div>
+        <div class="cd-box"><div class="cd-num" id="cd-m">00</div><div class="cd-label">Menit</div></div>
+        <div class="cd-box"><div class="cd-num" id="cd-s">00</div><div class="cd-label">Detik</div></div>
+      </div>
+      <div class="center" style="font-size:.72rem; letter-spacing:.14em; color:var(--gold-light); margin-bottom:30px; text-transform:uppercase;">Menuju Hari Akad</div>
+
+      <div class="event-grid">
+        <div class="event-card">
+          <div class="event-title">Akad Nikah</div>
+          <div class="event-day">Minggu</div>
+          <div class="event-date">6 September 2026</div>
+          <div class="event-time">Pukul 07.00 WIB</div>
+          <div class="event-place">Masjid Abdul Aziz<br>Abdurrahman Nahir Al-Hamadi</div>
+        </div>
+        <div class="event-card">
+          <div class="event-title">Ngunduh Mantu</div>
+          <div class="event-day">Minggu</div>
+          <div class="event-date">13 September 2026</div>
+          <div class="event-time">Pukul 09.00 WIB</div>
+          <div class="event-place">Gedung Kapujanggan<br>Jl. Pengging–Banyudono, Bendan II</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LOCATION ===== -->
+  <section id="location">
+    <div class="container">
+      <div class="eyebrow">Lokasi Acara</div>
+      <div class="loc-block" style="margin-top:30px;">
+        <div class="loc-title">Akad Nikah</div>
+        <div class="loc-address">Masjid Abdul Aziz Abdurrahman Nahir Al-Hamadi</div>
+        <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Masjid+Abdul+Aziz+Abdurrahman+Nahir+Al-Hamadi">Buka Google Maps</a>
+      </div>
+      <div class="loc-block">
+        <div class="loc-title">Ngunduh Mantu</div>
+        <div class="loc-address">Gedung Kapujanggan, Jl. Pengging–Banyudono, Bendan II, Bendan, Kec. Banyudono, Kab. Boyolali</div>
+        <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Gedung+Kapujanggan+Bendan+Banyudono+Boyolali">Buka Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GIFT ===== -->
+  <section id="gift" style="background:var(--cream-2);">
+    <div class="container">
+      <div class="eyebrow">Tanda Kasih</div>
+      <div class="center serif" style="font-size:1.4rem; color:var(--forest); margin-bottom:10px;">Amplop Digital</div>
+      <p class="quote" style="font-size:1.05rem; margin-bottom:28px;">
+        Doa restu Bapak/Ibu/Saudara/i adalah karunia yang sangat berarti bagi kami. Namun jika ingin memberikan tanda kasih, kami dengan senang hati menerimanya melalui:
+      </p>
+      <div style="max-width:340px; margin:0 auto; text-align:center; border:1px solid var(--forest); padding:28px 20px; background:var(--cream);">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--forest); letter-spacing:.05em;">BCA</div>
+        <div id="rekNumber" style="font-size:1.6rem; letter-spacing:.06em; color:var(--ink); margin:10px 0 4px; font-family:'Cormorant Garamond',serif;">3930891061</div>
+        <div style="font-size:.85rem; color:var(--ink-soft); letter-spacing:.03em; margin-bottom:16px;">a.n. Army Dwi Apriyanto</div>
+        <button class="btn-open" style="border-color:var(--forest); color:var(--forest);" onclick="copyRek()">📋 &nbsp;Salin Nomor Rekening</button>
+        <div id="copyNote" style="font-size:.78rem; color:var(--forest); margin-top:10px; opacity:0;">Nomor rekening disalin</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-kawung"></div>
+
+  <!-- ===== CLOSING ===== -->
+  <section id="closing">
+    <div class="container">
+      <p class="quote">
+        Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kedua mempelai.
+      </p>
+      <div class="closing-thanks">Atas kehadiran serta doa restunya, kami ucapkan terima kasih</div>
+      <div class="closing-names">Army &amp; Niken</div>
+    </div>
+  </section>
+
+  <footer>Dengan hormat, keluarga besar Bapak Joko Saroyo &amp; Bapak Peltu (Purn) Darmantono</footer>
+
+<script>
+  // Ambil nama tamu dari parameter URL ?to=Nama
+  const params = new URLSearchParams(window.location.search);
+  const guest = params.get('to');
+  if(guest){
+    document.getElementById('guestName').textContent = decodeURIComponent(guest).replace(/\+/g,' ');
+  }
+
+  function copyRek(){
+    const num = document.getElementById('rekNumber').textContent.trim();
+    navigator.clipboard.writeText(num).then(()=>{
+      const note = document.getElementById('copyNote');
+      note.style.opacity = '1';
+      setTimeout(()=>{ note.style.opacity = '0'; }, 2000);
+    });
+  }
+
+  function openGate(){
+    document.getElementById('gate').classList.add('opened');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Countdown menuju Akad Nikah — 6 September 2026, 07.00 WIB (+07:00)
+  const target = new Date('2026-09-06T07:00:00+07:00').getTime();
+  function updateCountdown(){
+    const now = new Date().getTime();
+    let diff = target - now;
+    if(diff < 0) diff = 0;
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const s = Math.floor((diff % (1000*60)) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
