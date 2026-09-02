@@ -194,6 +194,19 @@
   .closing-thanks{ font-size:.95rem; color:var(--gold-light); margin-top:26px; letter-spacing:.05em; }
   .closing-names{ font-family:'Alex Brush', cursive; font-size:2.6rem; color:var(--gold-light); margin-top:10px; }
   footer{ text-align:center; padding:22px; font-size:.75rem; color:var(--ink-soft); background:var(--cream-2); }
+
+  /* ---------- Music toggle ---------- */
+  #musicToggle{
+    position:fixed; bottom:22px; right:22px; z-index:60;
+    width:52px; height:52px; border-radius:50%;
+    background:var(--forest); border:2px solid var(--gold);
+    color:var(--gold-light); font-size:1.3rem;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.25);
+  }
+  #musicIcon{ display:inline-block; }
+  #musicIcon.spinning{ animation: spin 3.5s linear infinite; }
+  @keyframes spin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
 </style>
 </head>
 <body>
@@ -364,6 +377,14 @@
     </div>
   </section>
 
+  <!-- ===== MUSIC PLAYER ===== -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicToggle" onclick="toggleMusic()" title="Putar/Jeda musik">
+    <span id="musicIcon">🎵</span>
+  </button>
+
   <footer>Dengan hormat, keluarga besar Bapak Joko Saroyo &amp; Bapak Peltu (Purn) Darmantono</footer>
 
 <script>
@@ -386,6 +407,22 @@
   function openGate(){
     document.getElementById('gate').classList.add('opened');
     document.body.style.overflow = 'auto';
+    const music = document.getElementById('bgMusic');
+    music.play().then(()=>{
+      document.getElementById('musicIcon').classList.add('spinning');
+    }).catch(()=>{ /* browser tetap memblokir autoplay, tunggu tombol musik ditekan manual */ });
+  }
+
+  function toggleMusic(){
+    const music = document.getElementById('bgMusic');
+    const icon = document.getElementById('musicIcon');
+    if(music.paused){
+      music.play();
+      icon.classList.add('spinning');
+    }else{
+      music.pause();
+      icon.classList.remove('spinning');
+    }
   }
 
   // Countdown menuju Akad Nikah — 6 September 2026, 07.00 WIB (+07:00)
