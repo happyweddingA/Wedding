@@ -296,9 +296,16 @@
         <div class="cd-box"><div class="cd-num" id="cd-m">00</div><div class="cd-label">Menit</div></div>
         <div class="cd-box"><div class="cd-num" id="cd-s">00</div><div class="cd-label">Detik</div></div>
       </div>
-      <div class="center" style="font-size:.72rem; letter-spacing:.14em; color:var(--gold-light); margin-bottom:30px; text-transform:uppercase;">Menuju Hari Bahagia</div>
+      <div class="center" style="font-size:.72rem; letter-spacing:.14em; color:var(--gold-light); margin-bottom:30px; text-transform:uppercase;">Menuju Hari Akad</div>
 
-      <div class="event-grid" style="grid-template-columns:1fr; max-width:340px; margin-left:auto; margin-right:auto;">
+      <div class="event-grid">
+        <div class="event-card">
+          <div class="event-title">Akad Nikah</div>
+          <div class="event-day">Minggu</div>
+          <div class="event-date">6 September 2026</div>
+          <div class="event-time">Pukul 07.00 WIB</div>
+          <div class="event-place">Masjid Abdul Aziz<br>Abdurrahman Nahir Al-Hamadi</div>
+        </div>
         <div class="event-card">
           <div class="event-title">Ngunduh Mantu</div>
           <div class="event-day">Minggu</div>
@@ -315,6 +322,10 @@
     <div class="container">
       <div class="eyebrow">Lokasi Acara</div>
       <div class="loc-block" style="margin-top:30px;">
+        <div class="loc-title">Akad Nikah</div>
+        <div class="loc-address">Masjid Abdul Aziz Abdurrahman Nahir Al-Hamadi<br>Dk. Sabrangan, Salakan, Teras, Boyolali</div>
+      </div>
+      <div class="loc-block">
         <div class="loc-title">Ngunduh Mantu</div>
         <div class="loc-address">Gedung Kapujanggan, Jl. Pengging–Banyudono, Bendan II, Bendan, Kec. Banyudono, Kab. Boyolali</div>
         <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Gedung+Kapujanggan+Bendan+Banyudono+Boyolali">Buka Google Maps</a>
@@ -377,8 +388,8 @@
     document.body.style.overflow = 'auto';
   }
 
-  // Countdown menuju Ngunduh Mantu — 13 September 2026, 09.00 WIB (+07:00)
-  const target = new Date('2026-09-13T09:00:00+07:00').getTime();
+  // Countdown menuju Akad Nikah — 6 September 2026, 07.00 WIB (+07:00)
+  const target = new Date('2026-09-06T07:00:00+07:00').getTime();
   function updateCountdown(){
     const now = new Date().getTime();
     let diff = target - now;
